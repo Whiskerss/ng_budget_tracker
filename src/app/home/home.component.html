@@ -1,0 +1,67 @@
+<div class="m-5">
+  <div class="card hstack gap-3 p-3">
+    <h3>Budget Tracker</h3>
+    <div class="vr"></div>
+    <h4>Dashboard</h4>
+    <span class="ms-auto"> {{currentUser.name}} </span>
+  </div>
+
+  <div class="card my-5 p-3">
+    <div class="d-flex justify-content-around text-center">
+      <div>
+        <h4>Total Income</h4>
+        <h5>NRS 2400</h5>
+      </div>
+      <div class="vr"></div>
+      <div class="">
+        <h4>Total Expense</h4>
+        <h5>NRS 2200</h5>
+      </div>
+      <div class="vr"></div>
+      <div>
+        <h4>Balance</h4>
+        <h5>NRS 200</h5>
+      </div>
+    </div>
+  </div>
+
+  <div class="display-stats mt" *ngIf="!isFormVisible">
+    <input
+      class="form-control form-control-lg mb-5"
+      type="text"
+      placeholder="Search"
+    />
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Date</th>
+          <th scope="col">Type</th>
+          <th scope="col">Reoccuring</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let data of storedData; let i = index">
+        <tr>
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ data.name }}</td>
+          <td>{{ data.amount }}</td>
+          <td>{{ data.date }}</td>
+          <td>{{ data.type }}</td>
+          <td>{{ data.reoccuring }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button
+      type="submit"
+      class="btn btn-success"
+      (click)="toggleFormVisibility()"
+    >
+      Add
+    </button>
+  </div>
+
+  <app-add-form *ngIf="isFormVisible" />
+</div>
