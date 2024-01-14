@@ -30,6 +30,9 @@ export class AddFormComponent implements OnInit {
       name: ['', Validators.required],
       amount: [, Validators.required],
       date: ['', Validators.required],
+      type: ['Type', Validators.required],
+      reoccuring: ['Reoccuring', Validators.required],
+      category: ['Category', Validators.required],
     });
   }
 
@@ -38,11 +41,19 @@ export class AddFormComponent implements OnInit {
     const userId = this.currentUserService.getCurrentUser().id;
     this.userService.addFinancialData(userId, formData);
 
-    this.form.reset();
+    this.form.reset({
+      type: 'Type',
+      reoccuring: 'Reoccuring',
+      category: 'Category',
+    });
   }
 
   onCancel() {
     this.homeComponent.toggleFormVisibility();
-    this.form.reset();
+    this.form.reset({
+      type: 'Type',
+      reoccuring: 'Reoccuring',
+      category: 'Category',
+    });
   }
 }

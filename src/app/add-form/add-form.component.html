@@ -40,64 +40,30 @@
       />
     </div>
 
-    <div class="col">
-      <select formControlName="type">
-        <option default>Pick a team</option>
-        <option>Lakers</option>
-        <option>Miami</option>
-        <option>Cleveland</option>
-      </select>
-    </div>
-
     <div class="btn-group col-6 my-4">
-      <div class="btn-group w-100" ngbDropdown role="group">
-        <button type="button" class="btn btn-outline-warning" ngbDropdownToggle>
-          Type
-        </button>
-        <div class="dropdown-menu" ngbDropdownMenu>
-          <button ngbDropdownItem>Income</button>
-          <button ngbDropdownItem>Expense</button>
-        </div>
-      </div>
-      <div
-        class="btn-group w-100"
-        ngbDropdown
-        role="group"
-        aria-label="Button group with nested dropdown"
-      >
-        <button type="button" class="btn btn-outline-danger" ngbDropdownToggle>
-          Reoccuring
-        </button>
-        <div class="dropdown-menu" ngbDropdownMenu>
-          <button ngbDropdownItem>Once a month</button>
-          <button ngbDropdownItem>Once a week</button>
-          <button ngbDropdownItem>Daily</button>
-          <button ngbDropdownItem>Random</button>
-          <button ngbDropdownItem>Sometimes</button>
-        </div>
-      </div>
-      <div
-        class="btn-group w-100"
-        ngbDropdown
-        role="group"
-        aria-label="Button group with nested dropdown"
-      >
-        <button type="button" class="btn btn-outline-success" ngbDropdownToggle>
-          Category
-        </button>
-        <div class="dropdown-menu" ngbDropdownMenu>
-          <button ngbDropdownItem>Housing</button>
-          <button ngbDropdownItem>Utilities</button>
-          <button ngbDropdownItem>Transportation</button>
-          <button ngbDropdownItem>Food</button>
-          <button ngbDropdownItem>Insurance</button>
-          <button ngbDropdownItem>Entertainment</button>
-          <button ngbDropdownItem>Primary Income</button>
-          <button ngbDropdownItem>Secondary Income</button>
-          <button ngbDropdownItem>Investment Income</button>
-          <button ngbDropdownItem>Other</button>
-        </div>
-      </div>
+      <select class="btn border" formControlName="type" id="type">
+        <option disabled selected hidden>Type</option>
+        <option>Income</option>
+        <option>Expense</option>
+      </select>
+      <select class="btn border" formControlName="reoccuring">
+        <option disabled selected hidden>Reoccuring</option>
+        <option>Daily</option>
+        <option>Weekly</option>
+        <option>Monthly</option>
+        <option>Yearly</option>
+        <option>Other</option>
+      </select>
+      <select class="btn border" formControlName="category">
+        <option disabled selected hidden>Category</option>
+        <option>Utilities</option>
+        <option>Housing</option>
+        <option>Transportation</option>
+        <option>Food</option>
+        <option>Personal</option>
+        <option>Entertainment</option>
+        <option>Savings</option>
+      </select>
     </div>
   </div>
 
