@@ -1,77 +1,109 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <div class="mb-3">
-    <label class="mb-2 text-muted" for="name">Name</label>
-    <input
-      id="name"
-      type="text"
-      class="form-control"
-      name="name"
-      formControlName="name"
-      required
-    />
-  </div>
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="border border-top-0 p-2 rounded"
+>
+  <div class="row">
+    <div class="mb-3 col-6">
+      <label for="name">Name</label>
+      <input
+        id="name"
+        type="text"
+        class="form-control"
+        name="name"
+        formControlName="name"
+        required
+      />
+    </div>
 
-  <div class="mb-3">
-    <label class="mb-2 text-muted" for="amount">Amount</label>
-    <input
-      id="amount"
-      type="number"
-      class="form-control"
-      name="amount"
-      formControlName="amount"
-      required
-    />
-  </div>
+    <div class="mb-3 col-6">
+      <label for="amount">Amount</label>
+      <input
+        id="amount"
+        type="number"
+        class="form-control"
+        name="amount"
+        formControlName="amount"
+        required
+      />
+    </div>
 
-  <div class="mb-3">
-    <label class="mb-2 text-muted" for="date">Date</label>
-    <input
-      id="date"
-      type="date"
-      class="form-control"
-      name="date"
-      formControlName="date"
-      required
-    />
-  </div>
+    <div class="mb-3 col-6">
+      <label for="date">Date</label>
+      <input
+        id="date"
+        type="date"
+        class="form-control"
+        name="date"
+        formControlName="date"
+        required
+      />
+    </div>
 
-  <div class="mb-3">
-    <label class="mb-2 text-muted" for="type">Type</label>
-    <input
-      id="type"
-      type="text"
-      class="form-control"
-      name="type"
-      formControlName="type"
-      required
-    />
-  </div>
-  <div class="mb-3">
-    <label class="mb-2 text-muted" for="reoccuring">Reoccuring</label>
-    <input
-      id="reoccuring"
-      type="text"
-      class="form-control"
-      name="reoccuring"
-      formControlName="reoccuring"
-      required
-    />
-  </div>
-  <div class="mb-3">
-    <label class="mb-2 text-muted" for="category">Category</label>
-    <input
-      id="category"
-      type="text"
-      class="form-control"
-      name="category"
-      formControlName="category"
-      required
-    />
+    <div class="col">
+      <select formControlName="type">
+        <option default>Pick a team</option>
+        <option>Lakers</option>
+        <option>Miami</option>
+        <option>Cleveland</option>
+      </select>
+    </div>
+
+    <div class="btn-group col-6 my-4">
+      <div class="btn-group w-100" ngbDropdown role="group">
+        <button type="button" class="btn btn-outline-warning" ngbDropdownToggle>
+          Type
+        </button>
+        <div class="dropdown-menu" ngbDropdownMenu>
+          <button ngbDropdownItem>Income</button>
+          <button ngbDropdownItem>Expense</button>
+        </div>
+      </div>
+      <div
+        class="btn-group w-100"
+        ngbDropdown
+        role="group"
+        aria-label="Button group with nested dropdown"
+      >
+        <button type="button" class="btn btn-outline-danger" ngbDropdownToggle>
+          Reoccuring
+        </button>
+        <div class="dropdown-menu" ngbDropdownMenu>
+          <button ngbDropdownItem>Once a month</button>
+          <button ngbDropdownItem>Once a week</button>
+          <button ngbDropdownItem>Daily</button>
+          <button ngbDropdownItem>Random</button>
+          <button ngbDropdownItem>Sometimes</button>
+        </div>
+      </div>
+      <div
+        class="btn-group w-100"
+        ngbDropdown
+        role="group"
+        aria-label="Button group with nested dropdown"
+      >
+        <button type="button" class="btn btn-outline-success" ngbDropdownToggle>
+          Category
+        </button>
+        <div class="dropdown-menu" ngbDropdownMenu>
+          <button ngbDropdownItem>Housing</button>
+          <button ngbDropdownItem>Utilities</button>
+          <button ngbDropdownItem>Transportation</button>
+          <button ngbDropdownItem>Food</button>
+          <button ngbDropdownItem>Insurance</button>
+          <button ngbDropdownItem>Entertainment</button>
+          <button ngbDropdownItem>Primary Income</button>
+          <button ngbDropdownItem>Secondary Income</button>
+          <button ngbDropdownItem>Investment Income</button>
+          <button ngbDropdownItem>Other</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="hstack gap-3">
     <button type="submit" class="btn btn-primary">Submit</button>
-    <button type="submit" class="btn btn-secondary" (click)="form.reset()">
+    <button type="submit" class="btn btn-secondary" (click)="onCancel()">
       Cancel
     </button>
   </div>
