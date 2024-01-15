@@ -10,10 +10,18 @@
         id="name"
         type="text"
         class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['name'].errors }"
         name="name"
         formControlName="name"
         required
       />
+      @if (submitted && f['name'].errors) {
+      <div class="invalid-feedback">
+        @if (f['name'].errors['required']) {
+        <div>Name is required!</div>
+        }
+      </div>
+      }
     </div>
 
     <div class="mb-3 col-6">
@@ -22,10 +30,18 @@
         id="amount"
         type="number"
         class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['amount'].errors }"
         name="amount"
         formControlName="amount"
         required
       />
+      @if (submitted && f['amount'].errors) {
+      <div class="invalid-feedback">
+        @if (f['amount'].errors['required']) {
+        <div>Amount is required!</div>
+        }
+      </div>
+      }
     </div>
 
     <div class="mb-3 col-6">
@@ -34,19 +50,40 @@
         id="date"
         type="date"
         class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['date'].errors }"
         name="date"
         formControlName="date"
         required
       />
+      @if (submitted && f['date'].errors) {
+      <div class="invalid-feedback">
+        @if (f['date'].errors['required']) {
+        <div>Date is required!</div>
+        }
+      </div>
+      }
     </div>
 
     <div class="btn-group col-6 my-4">
-      <select class="btn border" formControlName="type" id="type">
+      <select
+        class="btn border"
+        formControlName="type"
+        [ngClass]="{
+          'mb-3 border-danger text-danger': submitted && f['type'].errors
+        }"
+      >
         <option disabled selected hidden>Type</option>
         <option>Income</option>
         <option>Expense</option>
       </select>
-      <select class="btn border" formControlName="reoccuring">
+
+      <select
+        class="btn border"
+        formControlName="reoccuring"
+        [ngClass]="{
+          'mb-3 border-danger text-danger': submitted && f['reoccuring'].errors
+        }"
+      >
         <option disabled selected hidden>Reoccuring</option>
         <option>Daily</option>
         <option>Weekly</option>
@@ -54,7 +91,13 @@
         <option>Yearly</option>
         <option>Other</option>
       </select>
-      <select class="btn border" formControlName="category">
+      <select
+        class="btn border"
+        formControlName="category"
+        [ngClass]="{
+          'mb-3 border-danger text-danger': submitted && f['category'].errors
+        }"
+      >
         <option disabled selected hidden>Category</option>
         <option>Utilities</option>
         <option>Housing</option>

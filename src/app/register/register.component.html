@@ -10,11 +10,19 @@
               id="name"
               type="text"
               class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['name'].errors }"
               name="name"
               formControlName="name"
               required
               autofocus
             />
+            @if (submitted && f['name'].errors) {
+            <div class="invalid-feedback">
+              @if (f['name'].errors['required']) {
+              <div>Name is required!</div>
+              }
+            </div>
+            }
           </div>
 
           <div class="mb-3">
@@ -23,10 +31,22 @@
               id="email"
               type="email"
               class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
               name="email"
               formControlName="email"
               required
             />
+            @if (submitted && f['email'].errors) {
+            <div class="invalid-feedback">
+              @if (f['email'].errors['required']) {
+              <div>Email is required!</div>
+              } @if (f['email'].errors['email']) {
+              <div>Invalid email!</div>
+              }
+            </div>
+            } @if (existingUser) {
+            <div class="text-danger mb-2">User already exists!</div>
+            }
           </div>
 
           <div class="mb-3">
@@ -35,23 +55,18 @@
               id="password"
               type="password"
               class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
               name="password"
               formControlName="password"
               required
             />
-          </div>
-          <div class="mb-3">
-            <label class="mb-2 text-muted" for="confirmPassword"
-              >Confirm Password</label
-            >
-            <input
-              id="confirmPassword"
-              type="password"
-              class="form-control"
-              name="confirmPassword"
-              formControlName="confirmPassword"
-              required
-            />
+            @if (submitted && f['password'].errors) {
+            <div class="invalid-feedback">
+              @if (f['password'].errors['required']) {
+              <div>Password is required!</div>
+              }
+            </div>
+            }
           </div>
 
           <div class="text-center">

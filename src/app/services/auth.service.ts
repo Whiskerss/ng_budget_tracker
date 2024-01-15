@@ -11,6 +11,16 @@ export class AuthService {
     localStorage.setItem(this.currentUserStorageKey, JSON.stringify(user));
   }
 
+  checkUser(email: string): boolean {
+    const users = this.getUsers();
+    const user = users.find((u) => u.email === email);
+    if (user) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   login(email: string, password: string): boolean {
     const users = this.getUsers();
     const user = users.find(

@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { CurrentUserService } from '../services/current-user.service';
 import { HomeComponent } from '../home/home.component';
@@ -11,12 +18,7 @@ import { HomeComponent } from '../home/home.component';
 })
 export class AddFormComponent implements OnInit {
   public form!: FormGroup;
-  selectedTeam = '';
-
-  types = [
-    { label: 'Income', value: 'income' },
-    { label: 'Expense', value: 'expense' },
-  ];
+  submitted = false;
 
   constructor(
     private fb: FormBuilder,
@@ -26,29 +28,49 @@ export class AddFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const optionValidator = (invalString: string): ValidatorFn => {
+      return (control: AbstractControl): ValidationErrors | null => {
+        const value = control.value;
+        if (value === invalString) {
+          return { specificString: true };
+        }
+        return null;
+      };
+    };
+
     this.form = this.fb.group({
       name: ['', Validators.required],
       amount: [, Validators.required],
       date: ['', Validators.required],
-      type: ['Type', Validators.required],
-      reoccuring: ['Reoccuring', Validators.required],
-      category: ['Category', Validators.required],
+      type: ['Type', optionValidator('Type')],
+      reoccuring: ['Reoccuring', optionValidator('Reoccuring')],
+      category: ['Category', optionValidator('Category')],
     });
   }
 
+  get f(): { [key: string]: AbstractControl } {
+    return this.form.controls;
+  }
+
   onSubmit() {
+    this.submitted = true;
+
+    if (this.form.invalid) {
+      return;
+    }
     const formData = this.form.value;
     const userId = this.currentUserService.getCurrentUser().id;
     this.userService.addFinancialData(userId, formData);
-
     this.form.reset({
       type: 'Type',
       reoccuring: 'Reoccuring',
       category: 'Category',
     });
+    this.submitted = false;
   }
 
   onCancel() {
+    this.submitted = false;
     this.homeComponent.toggleFormVisibility();
     this.form.reset({
       type: 'Type',

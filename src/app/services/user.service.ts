@@ -6,7 +6,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 export class UserService {
   private readonly userStorageKey = 'users';
   dataUpdated: EventEmitter<any> = new EventEmitter();
-  
+
   getUsers(): any[] {
     const usersString = localStorage.getItem(this.userStorageKey);
     return usersString ? JSON.parse(usersString) : [];
@@ -42,7 +42,6 @@ export class UserService {
 
       localStorage.setItem(this.userStorageKey, JSON.stringify(users));
       this.dataUpdated.emit();
-      console.log('Add Success');
     } else {
       console.log('Add Error');
     }
