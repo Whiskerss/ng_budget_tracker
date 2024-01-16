@@ -9,11 +9,24 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { AddFormComponent } from './add-form/add-form.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Globals } from './globals/global/global';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent, HomeComponent, AddFormComponent],
-  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, FormsModule, NgbModule],
-  providers: [],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    RegisterComponent,
+    HomeComponent,
+    AddFormComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgbModule,
+  ],
+  providers: [Globals],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { HomeComponent } from '../home/home.component';
+import { Globals } from '../globals/global/global';
 
 @Component({
   selector: 'app-add-form',
@@ -19,25 +20,14 @@ export class AddFormComponent implements OnInit {
   public form!: FormGroup;
   submitted: boolean = false;
 
-  categories = [
-    'Utilities',
-    'Primary Income',
-    'Secondary Income',
-    'Investment',
-    'Housing',
-    'Transportation',
-    'Food',
-    'Personal',
-    'Entertainment',
-    'Savings',
-  ];
-
-  reoccurings = ['Daily', 'Weekly', 'Monthly', 'Yearly', 'Sometimes', 'Other'];
+  categories = this.globals.categories;
+  reoccurings = this.globals.reoccurings;
 
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    public homeComponent: HomeComponent
+    public homeComponent: HomeComponent,
+    public globals: Globals
   ) {}
 
   ngOnInit(): void {

@@ -31,11 +31,61 @@
   </div>
 
   <div class="display-stats mt border rounded p-2" *ngIf="isStatsVisible">
-    <input
-      class="form-control form-control mb-5 text-center"
-      type="text"
-      placeholder="Search"
-    />
+    <div>
+      <input
+        class="form-control form-control text-center"
+        type="text"
+        placeholder="Search"
+        [(ngModel)]="searchTerm"
+        (input)="onSearch()"
+      />
+
+      <div class="d-flex justify-content-around my-3">
+        <div>
+          <div
+            class="btn border px-5 py-3"
+            *ngIf="!showDatePicker"
+            (click)="toggleDatePicker()"
+          >
+            Date Range
+          </div>
+          <div *ngIf="showDatePicker">
+            <input
+              id="date"
+              type="date"
+              class="form-control"
+              name="date"
+              required
+            />
+            <input
+              id="date"
+              type="date"
+              class="form-control"
+              name="date"
+              required
+            />
+          </div>
+        </div>
+
+        <select class="btn border px-5 py-3">
+          <option disabled selected hidden>Type</option>
+          <option>Income</option>
+          <option>Expense</option>
+        </select>
+        <select class="btn border px-5 py-3">
+          <option disabled selected hidden>Reoccuring</option>
+          @for (reoccuring of reoccurings ; track reoccuring){
+          <option value="{{ reoccuring }}">{{ reoccuring }}</option>
+          }
+        </select>
+        <select class="btn border px-5 py-3">
+          <option disabled selected hidden>Category</option>
+          @for (category of categories ; track category){
+          <option value="{{ category }}">{{ category }}</option>
+          }
+        </select>
+      </div>
+    </div>
 
     <table
       class="table table-responsive table-bordered text-center table-striped-columns caption-top"
@@ -56,7 +106,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (data of storedData ; track data ;let i = $index){
+        @for (data of paginatedData() ; track data ;let i = $index){
         <tr>
           <th>{{ i + 1 }}</th>
           <td>{{ data.name }}</td>
@@ -79,6 +129,24 @@
         }
       </tbody>
     </table>
+    <div class="text-center btn-group col-12 mb-3">
+      <button
+        class="btn border"
+        (click)="currentPage = currentPage - 1"
+        [disabled]="currentPage === 1"
+      >
+        Previous
+      </button>
+      <span class="border p-1 px-5">{{ currentPage }}</span>
+      <button
+        class="btn border"
+        (click)="currentPage = currentPage + 1"
+        [disabled]="currentPage * itemsPerPage >= totalItems"
+      >
+        Next
+      </button>
+    </div>
+
     <button
       type="submit"
       class="btn btn-success"
