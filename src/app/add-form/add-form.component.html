@@ -84,7 +84,7 @@
       >
         <option disabled selected hidden>Reoccuring</option>
         @for (reoccuring of reoccurings ; track reoccuring){
-        <option>{{ reoccuring }}</option>
+        <option value="{{ reoccuring }}">{{ reoccuring }}</option>
         }
       </select>
       <select
@@ -95,8 +95,8 @@
         }"
       >
         <option disabled selected hidden>Category</option>
-        @for (category of categories ; track category){
-        <option>{{ category }}</option>
+        @for (category of categories ; track category ){
+        <option value="{{ category }}">{{ category }}</option>
         }
       </select>
     </div>

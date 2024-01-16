@@ -52,7 +52,7 @@
           <th>Date</th>
           <th>Reoccuring</th>
           <th>Category</th>
-          <th>Actions</th>
+          <th *ngIf="!isFormVisible">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -65,7 +65,7 @@
           <td>{{ data.date }}</td>
           <td>{{ data.reoccuring }}</td>
           <td>{{ data.category }}</td>
-          <td class="p-0">
+          <td *ngIf="!isFormVisible" class="p-0">
             <div class="btn-group w-100">
               <div class="btn btn-warning rounded-0" (click)="onEdit(data)">
                 Edit

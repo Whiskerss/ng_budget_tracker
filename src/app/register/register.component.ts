@@ -3,18 +3,14 @@ import {
   AbstractControl,
   FormBuilder,
   FormGroup,
-  ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from '../services/user.service';
 import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
 })
 export class RegisterComponent {
   public registerForm!: FormGroup;
@@ -24,7 +20,6 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private userService: UserService,
     private authService: AuthService
   ) {}
 
@@ -64,7 +59,7 @@ export class RegisterComponent {
       email: email,
       password: password,
     };
-    this.userService.addUser(user);
+    this.authService.register(user);
     this.router.navigateByUrl('/login');
   }
 }

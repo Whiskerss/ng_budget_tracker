@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
   public storedData: any[] = [];
@@ -27,20 +26,17 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.updateStoredData();
+    this.getStoredData();
     this.calculateData();
 
     this.userService.dataUpdated.subscribe(() => {
-      this.updateStoredData();
+      this.getStoredData();
       this.calculateData();
     });
   }
 
-  updateStoredData() {
-    const userId = this.currentUserService.getCurrentUser().id;
-    const users = this.userService.getUsers();
-    const userIndex = users.findIndex((user) => user.id === userId);
-    this.storedData = users[userIndex].financialData || [];
+  getStoredData() {
+    this.storedData = this.userService.getFinancialData();
   }
 
   toggleFormVisibility() {
@@ -71,7 +67,6 @@ export class HomeComponent implements OnInit {
   }
 
   onDelete(id: string) {
-    const userId = this.currentUserService.getCurrentUser().id;
-    this.userService.deleteFinancialData(userId, id);
+    this.userService.deleteFinancialData(id);
   }
 }

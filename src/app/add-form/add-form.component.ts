@@ -8,7 +8,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { UserService } from '../services/user.service';
-import { CurrentUserService } from '../services/current-user.service';
 import { HomeComponent } from '../home/home.component';
 
 @Component({
@@ -20,7 +19,7 @@ export class AddFormComponent implements OnInit {
   public form!: FormGroup;
   submitted: boolean = false;
 
-  categories: string[] = [
+  categories = [
     'Utilities',
     'Primary Income',
     'Secondary Income',
@@ -33,19 +32,11 @@ export class AddFormComponent implements OnInit {
     'Savings',
   ];
 
-  reoccurings: string[] = [
-    'Daily',
-    'Weekly',
-    'Monthly',
-    'Yearly',
-    'Sometimes',
-    'Other',
-  ];
+  reoccurings = ['Daily', 'Weekly', 'Monthly', 'Yearly', 'Sometimes', 'Other'];
 
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private currentUserService: CurrentUserService,
     public homeComponent: HomeComponent
   ) {}
 
@@ -70,7 +61,7 @@ export class AddFormComponent implements OnInit {
       category: ['Category', optionValidator('Category')],
     });
 
-    if (!this.homeComponent.isStatsVisible) {
+    if (this.homeComponent.editData) {
       this.form.patchValue(this.homeComponent.editData);
     }
   }
@@ -81,18 +72,21 @@ export class AddFormComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
     if (this.form.invalid) {
       return;
     }
     const formData = this.form.value;
-    const userId = this.currentUserService.getCurrentUser().id;
-    this.userService.addFinancialData(userId, formData);
+    this.homeComponent.editData
+      ? (this.userService.editFinancialData(formData),
+        this.homeComponent.toggleFormVisibility(),
+        (this.homeComponent.isStatsVisible = true))
+      : this.userService.addFinancialData(formData);
     this.form.reset({
       type: 'Type',
       reoccuring: 'Reoccuring',
       category: 'Category',
     });
+    this.homeComponent.editData = null;
     this.submitted = false;
   }
 
@@ -100,11 +94,11 @@ export class AddFormComponent implements OnInit {
     this.submitted = false;
     this.homeComponent.toggleFormVisibility();
     this.homeComponent.isStatsVisible = true;
-
     this.form.reset({
       type: 'Type',
       reoccuring: 'Reoccuring',
       category: 'Category',
     });
+    this.homeComponent.editData = null;
   }
 }
