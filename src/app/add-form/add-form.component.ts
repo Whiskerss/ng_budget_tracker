@@ -18,13 +18,35 @@ import { HomeComponent } from '../home/home.component';
 })
 export class AddFormComponent implements OnInit {
   public form!: FormGroup;
-  submitted = false;
+  submitted: boolean = false;
+
+  categories: string[] = [
+    'Utilities',
+    'Primary Income',
+    'Secondary Income',
+    'Investment',
+    'Housing',
+    'Transportation',
+    'Food',
+    'Personal',
+    'Entertainment',
+    'Savings',
+  ];
+
+  reoccurings: string[] = [
+    'Daily',
+    'Weekly',
+    'Monthly',
+    'Yearly',
+    'Sometimes',
+    'Other',
+  ];
 
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
     private currentUserService: CurrentUserService,
-    private homeComponent: HomeComponent
+    public homeComponent: HomeComponent
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +61,7 @@ export class AddFormComponent implements OnInit {
     };
 
     this.form = this.fb.group({
+      id: ['D4T4' + new Date().getTime().toString()],
       name: ['', Validators.required],
       amount: [, Validators.required],
       date: ['', Validators.required],
@@ -46,6 +69,10 @@ export class AddFormComponent implements OnInit {
       reoccuring: ['Reoccuring', optionValidator('Reoccuring')],
       category: ['Category', optionValidator('Category')],
     });
+
+    if (!this.homeComponent.isStatsVisible) {
+      this.form.patchValue(this.homeComponent.editData);
+    }
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -72,6 +99,8 @@ export class AddFormComponent implements OnInit {
   onCancel() {
     this.submitted = false;
     this.homeComponent.toggleFormVisibility();
+    this.homeComponent.isStatsVisible = true;
+
     this.form.reset({
       type: 'Type',
       reoccuring: 'Reoccuring',

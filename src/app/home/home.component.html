@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <div class="display-stats mt border rounded p-2">
+  <div class="display-stats mt border rounded p-2" *ngIf="isStatsVisible">
     <input
       class="form-control form-control mb-5 text-center"
       type="text"
@@ -52,9 +52,11 @@
           <th>Date</th>
           <th>Reoccuring</th>
           <th>Category</th>
+          <th>Actions</th>
         </tr>
       </thead>
-      <tbody *ngFor="let data of storedData; let i = index">
+      <tbody>
+        @for (data of storedData ; track data ;let i = $index){
         <tr>
           <th>{{ i + 1 }}</th>
           <td>{{ data.name }}</td>
@@ -63,7 +65,18 @@
           <td>{{ data.date }}</td>
           <td>{{ data.reoccuring }}</td>
           <td>{{ data.category }}</td>
+          <td class="p-0">
+            <div class="btn-group w-100">
+              <div class="btn btn-warning rounded-0" (click)="onEdit(data)">
+                Edit
+              </div>
+              <div class="btn btn-danger rounded-0" (click)="onDelete(data.id)">
+                Delete
+              </div>
+            </div>
+          </td>
         </tr>
+        }
       </tbody>
     </table>
     <button

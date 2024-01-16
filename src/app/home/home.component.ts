@@ -10,8 +10,10 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   public storedData: any[] = [];
-  currentUser: any = '';
+  public editData: any = null;
+  currentUser: any = null;
   isFormVisible: boolean = false;
+  isStatsVisible: boolean = true;
   expense: number = 0;
   income: number = 0;
   balance: number = 0;
@@ -60,5 +62,16 @@ export class HomeComponent implements OnInit {
       .reduce((total, entry) => total + entry.amount, 0);
 
     this.balance = this.income - this.expense;
+  }
+
+  onEdit(data: any) {
+    this.isFormVisible = true;
+    this.isStatsVisible = false;
+    this.editData = data;
+  }
+
+  onDelete(id: string) {
+    const userId = this.currentUserService.getCurrentUser().id;
+    this.userService.deleteFinancialData(userId, id);
   }
 }

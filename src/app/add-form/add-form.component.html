@@ -1,9 +1,7 @@
-<form
-  [formGroup]="form"
-  (ngSubmit)="onSubmit()"
-  class="border border-top-0 p-2 rounded"
->
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="border p-2 rounded">
   <div class="row">
+    <h2 class="text-center" *ngIf="!this.homeComponent.isStatsVisible">Edit</h2>
+
     <div class="mb-3 col-6">
       <label for="name">Name</label>
       <input
@@ -85,11 +83,9 @@
         }"
       >
         <option disabled selected hidden>Reoccuring</option>
-        <option>Daily</option>
-        <option>Weekly</option>
-        <option>Monthly</option>
-        <option>Yearly</option>
-        <option>Other</option>
+        @for (reoccuring of reoccurings ; track reoccuring){
+        <option>{{ reoccuring }}</option>
+        }
       </select>
       <select
         class="btn border"
@@ -99,13 +95,9 @@
         }"
       >
         <option disabled selected hidden>Category</option>
-        <option>Utilities</option>
-        <option>Housing</option>
-        <option>Transportation</option>
-        <option>Food</option>
-        <option>Personal</option>
-        <option>Entertainment</option>
-        <option>Savings</option>
+        @for (category of categories ; track category){
+        <option>{{ category }}</option>
+        }
       </select>
     </div>
   </div>
