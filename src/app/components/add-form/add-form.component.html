@@ -1,6 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="border p-2 rounded">
   <div class="row">
-    <h2 class="text-center" *ngIf="!this.homeComponent.isStatsVisible">Edit</h2>
+    <h2 class="text-center" *ngIf="!globals.isStatsVisible">Edit</h2>
 
     <div class="mb-3 col-6">
       <label for="name">Name</label>
@@ -104,7 +104,7 @@
 
   <div class="hstack gap-3">
     <button type="submit" class="btn btn-primary">Submit</button>
-    <button type="submit" class="btn btn-secondary" (click)="onCancel()">
+    <button type="button" class="btn btn-secondary" (click)="onCancel()">
       Cancel
     </button>
   </div>

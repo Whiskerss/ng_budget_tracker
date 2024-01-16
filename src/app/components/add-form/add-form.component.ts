@@ -7,9 +7,10 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { UserService } from '../services/user.service';
-import { HomeComponent } from '../home/home.component';
-import { Globals } from '../globals/global/global';
+import { UserService } from '../../services/user.service';
+import { HomeComponent } from '../../home/home.component';
+import { Globals } from '../../globals/global/global';
+import { DataTableComponent } from '../data-table/data-table.component';
 
 @Component({
   selector: 'app-add-form',
@@ -27,6 +28,7 @@ export class AddFormComponent implements OnInit {
     private fb: FormBuilder,
     private userService: UserService,
     public homeComponent: HomeComponent,
+    public dataTable: DataTableComponent,
     public globals: Globals
   ) {}
 
@@ -51,8 +53,8 @@ export class AddFormComponent implements OnInit {
       category: ['Category', optionValidator('Category')],
     });
 
-    if (this.homeComponent.editData) {
-      this.form.patchValue(this.homeComponent.editData);
+    if (this.globals.editData) {
+      this.form.patchValue(this.globals.editData);
     }
   }
 
@@ -66,29 +68,29 @@ export class AddFormComponent implements OnInit {
       return;
     }
     const formData = this.form.value;
-    this.homeComponent.editData
+    this.globals.editData
       ? (this.userService.editFinancialData(formData),
-        this.homeComponent.toggleFormVisibility(),
-        (this.homeComponent.isStatsVisible = true))
+        this.globals.toggleFormVisibility(),
+        (this.globals.isStatsVisible = true))
       : this.userService.addFinancialData(formData);
     this.form.reset({
       type: 'Type',
       reoccuring: 'Reoccuring',
       category: 'Category',
     });
-    this.homeComponent.editData = null;
+    this.globals.editData = null;
     this.submitted = false;
   }
 
   onCancel() {
     this.submitted = false;
-    this.homeComponent.toggleFormVisibility();
-    this.homeComponent.isStatsVisible = true;
+    this.globals.toggleFormVisibility();
+    this.globals.isStatsVisible = true;
     this.form.reset({
       type: 'Type',
       reoccuring: 'Reoccuring',
       category: 'Category',
     });
-    this.homeComponent.editData = null;
+    this.globals.editData = null;
   }
 }

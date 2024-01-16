@@ -7,9 +7,11 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
-import { AddFormComponent } from './add-form/add-form.component';
+import { AddFormComponent } from './components/add-form/add-form.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Globals } from './globals/global/global';
+import { DataTableComponent } from './components/data-table/data-table.component';
+import { SummaryStatsComponent } from './components/summary-stats/summary-stats.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { Globals } from './globals/global/global';
     RegisterComponent,
     HomeComponent,
     AddFormComponent,
+    DataTableComponent,
+    SummaryStatsComponent,
   ],
   imports: [
     BrowserModule,

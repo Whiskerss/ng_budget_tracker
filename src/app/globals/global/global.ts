@@ -16,4 +16,14 @@ export class Globals {
   ];
 
   reoccurings = ['Daily', 'Weekly', 'Monthly', 'Yearly', 'Sometimes', 'Other'];
+
+  isFormVisible: boolean = false;
+  isStatsVisible: boolean = true;
+
+  toggleFormVisibility() {
+    this.isFormVisible = !this.isFormVisible;
+    console.log(this.isFormVisible);
+  }
+
+  public editData: any = null;
 }
