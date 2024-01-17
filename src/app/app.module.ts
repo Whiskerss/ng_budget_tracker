@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { AddFormComponent } from './components/add-form/add-form.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { Globals } from './globals/global/global';
+import { Globals } from './globals/global';
 import { DataTableComponent } from './components/data-table/data-table.component';
 import { SummaryStatsComponent } from './components/summary-stats/summary-stats.component';
 

@@ -35,20 +35,32 @@
         </div>
       </div>
 
-      <select class="btn border px-5 py-3">
-        <option disabled selected hidden>Type</option>
+      <select
+        #type
+        class="btn border px-5 py-3"
+        (change)="filterType(type.value)"
+      >
+        <option selected>Type</option>
         <option>Income</option>
         <option>Expense</option>
       </select>
-      <select class="btn border px-5 py-3">
-        <option disabled selected hidden>Reoccuring</option>
-        @for (reoccuring of reoccurings ; track reoccuring){
+      <select
+        #reoccuring
+        class="btn border px-5 py-3"
+        (change)="filterReoccuring(reoccuring.value)"
+      >
+        <option selected>Reoccuring</option>
+        @for (reoccuring of globals.reoccurings ; track reoccuring){
         <option value="{{ reoccuring }}">{{ reoccuring }}</option>
         }
       </select>
-      <select class="btn border px-5 py-3">
-        <option disabled selected hidden>Category</option>
-        @for (category of categories ; track category){
+      <select
+        #category
+        class="btn border px-5 py-3"
+        (change)="filterCategory(category.value)"
+      >
+        <option selected>Category</option>
+        @for (category of globals.categories ; track category){
         <option value="{{ category }}">{{ category }}</option>
         }
       </select>
@@ -94,6 +106,8 @@
           </div>
         </td>
       </tr>
+      }@empty {
+      <td [colSpan]="8">Wow! So empty</td>
       }
     </tbody>
   </table>

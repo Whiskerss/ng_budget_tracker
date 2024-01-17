@@ -9,8 +9,8 @@ import {
 } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { HomeComponent } from '../../home/home.component';
-import { Globals } from '../../globals/global/global';
 import { DataTableComponent } from '../data-table/data-table.component';
+import { Globals } from '../../globals/global';
 
 @Component({
   selector: 'app-add-form',

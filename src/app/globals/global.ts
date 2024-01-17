@@ -22,7 +22,6 @@ export class Globals {
 
   toggleFormVisibility() {
     this.isFormVisible = !this.isFormVisible;
-    console.log(this.isFormVisible);
   }
 
   public editData: any = null;

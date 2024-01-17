@@ -18,9 +18,8 @@ export class UserService {
   }
 
   getFinancialData() {
-    const userId = this.currentUserService.getCurrentUser().id;
     const users = this.getUsers();
-    const userIndex = users.findIndex((user) => user.id === userId);
+    const userIndex = users.findIndex((user) => user.id === this.currentUserId);
     return users[userIndex].financialData || [];
   }
 
@@ -54,7 +53,7 @@ export class UserService {
         localStorage.setItem(this.userStorageKey, JSON.stringify(users));
         this.dataUpdated.emit();
       } else {
-        console.log('Financial Data not found for deletion!');
+        console.log('Edit: Financial Data not found!');
       }
     } else {
       console.log('Edit: User Not Found!');
@@ -78,7 +77,7 @@ export class UserService {
         localStorage.setItem(this.userStorageKey, JSON.stringify(users));
         this.dataUpdated.emit();
       } else {
-        console.log('Financial Data not found for deletion!');
+        console.log('Delete: Financial Data not found!');
       }
     } else {
       console.log('Delete: User not found!');
