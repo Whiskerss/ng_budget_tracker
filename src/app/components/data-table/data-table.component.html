@@ -4,8 +4,8 @@
       class="form-control form-control text-center"
       type="text"
       placeholder="Search"
-      [(ngModel)]="searchTerm"
-      (input)="onSearch()"
+      [(ngModel)]="appliedFilters.searchTerm"
+      (input)="getStoredData()"
     />
 
     <div class="d-flex justify-content-around my-3">
@@ -19,17 +19,21 @@
         </div>
         <div *ngIf="showDatePicker">
           <input
-            id="date"
+            id="startDate"
             type="date"
             class="form-control"
-            name="date"
+            name="startDate"
+            [(ngModel)]="appliedFilters.dateStart"
+            (input)="getStoredData()"
             required
           />
           <input
-            id="date"
+            id="endDate"
             type="date"
             class="form-control"
-            name="date"
+            name="endDate"
+            [(ngModel)]="appliedFilters.dateEnd"
+            (input)="getStoredData()"
             required
           />
         </div>

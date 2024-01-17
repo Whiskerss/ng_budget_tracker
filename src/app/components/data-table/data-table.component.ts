@@ -14,7 +14,6 @@ export class DataTableComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 5;
   totalItems: number = 0;
-  searchTerm: string = '';
   showDatePicker: boolean = false;
   appliedFilters: any = {};
 
@@ -37,11 +36,11 @@ export class DataTableComponent implements OnInit {
   getStoredData() {
     let filteredData = this.userService.getFinancialData();
 
-    if (this.appliedFilters.name) {
+    if (this.appliedFilters.searchTerm) {
       filteredData = filteredData.filter((entry: { name: string }) =>
         entry.name
           .toLowerCase()
-          .includes(this.appliedFilters.name.toLowerCase())
+          .includes(this.appliedFilters.searchTerm.toLowerCase())
       );
     }
 
@@ -61,6 +60,16 @@ export class DataTableComponent implements OnInit {
       );
     }
 
+    if (this.appliedFilters.dateStart && this.appliedFilters.dateEnd) {
+      filteredData = filteredData.filter((entry: { date: string }) => {
+        const entryDate = new Date(entry.date);
+        const startDate = new Date(this.appliedFilters.dateStart);
+        const endDate = new Date(this.appliedFilters.dateEnd);
+
+        return entryDate >= startDate && entryDate <= endDate;
+      });
+    }
+
     if (this.appliedFilters.category) {
       filteredData = filteredData.filter((entry: { category: string }) =>
         entry.category
@@ -71,15 +80,6 @@ export class DataTableComponent implements OnInit {
 
     this.storedData = filteredData;
     this.totalItems = this.storedData.length;
-  }
-
-  onSearch() {
-    if (this.searchTerm === '') {
-      delete this.appliedFilters.name;
-    } else {
-      this.appliedFilters.name = this.searchTerm;
-    }
-    this.getStoredData();
   }
 
   filterType(type: string) {
