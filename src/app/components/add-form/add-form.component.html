@@ -83,7 +83,7 @@
         }"
       >
         <option disabled selected hidden>Reoccuring</option>
-        @for (reoccuring of reoccurings ; track reoccuring){
+        @for (reoccuring of globals.reoccurings ; track reoccuring){
         <option value="{{ reoccuring }}">{{ reoccuring }}</option>
         }
       </select>
@@ -95,7 +95,7 @@
         }"
       >
         <option disabled selected hidden>Category</option>
-        @for (category of categories ; track category ){
+        @for (category of globals.categories ; track category ){
         <option value="{{ category }}">{{ category }}</option>
         }
       </select>

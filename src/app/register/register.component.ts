@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-register',
@@ -39,7 +40,7 @@ export class RegisterComponent {
     return new Date().getTime().toString();
   }
 
-  eRegister() {
+  eRegister(): void {
     this.submitted = true;
     if (this.registerForm.invalid) {
       return;
@@ -52,8 +53,8 @@ export class RegisterComponent {
       this.existingUser = true;
       return;
     }
-    const userId = this.generateUserId();
-    const user = {
+    const userId: string = this.generateUserId();
+    const user: User = {
       id: userId,
       name: name,
       email: email,

@@ -34,15 +34,15 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls;
   }
 
-  eLogin() {
+  eLogin(): void {
     this.submitted = true;
     if (this.loginForm.invalid) {
       return;
     }
-    const email = this.loginForm.value.email;
-    const password = this.loginForm.value.password;
+    const email: string = this.loginForm.value.email;
+    const password: string = this.loginForm.value.password;
     if (this.authService.login(email, password)) {
-      this.router.navigate(['/home']);
+      this.router.navigateByUrl('/home');
       this.submitted = false;
       this.authError = false;
     } else {

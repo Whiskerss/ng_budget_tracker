@@ -1,28 +1,29 @@
 import { Injectable } from '@angular/core';
 import { CurrentUserService } from './current-user.service';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private readonly userStorageKey = 'users';
-  
+
   constructor(private currentUserService: CurrentUserService) {}
 
-  private getUsers(): any[] {
+  private getUsers(): User[] {
     const usersString = localStorage.getItem(this.userStorageKey);
     return usersString ? JSON.parse(usersString) : [];
   }
 
-  register(user: any): void {
-    const users = this.getUsers();
+  register(user: User): void {
+    const users: User[] = this.getUsers();
     users.push(user);
     localStorage.setItem(this.userStorageKey, JSON.stringify(users));
   }
 
   login(email: string, password: string): boolean {
-    const users = this.getUsers();
-    const user = users.find(
+    const users: User[] = this.getUsers();
+    const user: User | undefined = users.find(
       (u) => u.email === email && u.password === password
     );
 
@@ -35,7 +36,7 @@ export class AuthService {
   }
 
   checkUser(email: string): boolean {
-    const users = this.getUsers();
+    const users: User[] = this.getUsers();
     const user = users.find((u) => u.email === email);
     if (user) {
       return true;

@@ -21,9 +21,6 @@ export class AddFormComponent implements OnInit {
   public form!: FormGroup;
   submitted: boolean = false;
 
-  categories = this.globals.categories;
-  reoccurings = this.globals.reoccurings;
-
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
@@ -62,7 +59,7 @@ export class AddFormComponent implements OnInit {
     return this.form.controls;
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.submitted = true;
     if (this.form.invalid) {
       return;
@@ -78,11 +75,11 @@ export class AddFormComponent implements OnInit {
       reoccuring: 'Reoccuring',
       category: 'Category',
     });
-    this.globals.editData = null;
+    delete this.globals.editData;
     this.submitted = false;
   }
 
-  onCancel() {
+  onCancel(): void {
     this.submitted = false;
     this.globals.toggleFormVisibility();
     this.globals.isStatsVisible = true;
@@ -91,6 +88,6 @@ export class AddFormComponent implements OnInit {
       reoccuring: 'Reoccuring',
       category: 'Category',
     });
-    this.globals.editData = null;
+    delete this.globals.editData;
   }
 }

@@ -12,7 +12,7 @@ export class SummaryStatsComponent implements OnInit {
 
   constructor(public userService: UserService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.calculateData();
 
     this.userService.dataUpdated.subscribe(() => {
@@ -20,16 +20,22 @@ export class SummaryStatsComponent implements OnInit {
     });
   }
 
-  calculateData() {
+  calculateData(): void {
     this.expense = this.userService
       .getFinancialData()
       .filter((entry: { type: string }) => entry.type === 'Expense')
-      .reduce((total: any, entry: { amount: any }) => total + entry.amount, 0);
+      .reduce(
+        (total: number, entry: { amount: number }) => total + entry.amount,
+        0
+      );
 
     this.income = this.userService
       .getFinancialData()
       .filter((entry: { type: string }) => entry.type === 'Income')
-      .reduce((total: any, entry: { amount: any }) => total + entry.amount, 0);
+      .reduce(
+        (total: number, entry: { amount: number }) => total + entry.amount,
+        0
+      );
 
     this.balance = this.income - this.expense;
   }

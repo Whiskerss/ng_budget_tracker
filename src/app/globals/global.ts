@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { FinancialData } from '../models/financial-data.model';
 
 @Injectable()
 export class Globals {
-  categories = [
+  categories: string[] = [
     'Utilities',
     'Primary Income',
     'Secondary Income',
@@ -15,14 +16,21 @@ export class Globals {
     'Savings',
   ];
 
-  reoccurings = ['Daily', 'Weekly', 'Monthly', 'Yearly', 'Sometimes', 'Other'];
+  reoccurings: string[] = [
+    'Daily',
+    'Weekly',
+    'Monthly',
+    'Yearly',
+    'Sometimes',
+    'Other',
+  ];
 
   isFormVisible: boolean = false;
   isStatsVisible: boolean = true;
 
-  toggleFormVisibility() {
+  toggleFormVisibility(): void {
     this.isFormVisible = !this.isFormVisible;
   }
 
-  public editData: any = null;
+  public editData?: FinancialData;
 }

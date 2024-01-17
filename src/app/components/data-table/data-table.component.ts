@@ -1,6 +1,7 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { Globals } from '../../globals/global';
+import { FinancialData } from '../../models/financial-data.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ import { Globals } from '../../globals/global';
   templateUrl: './data-table.component.html',
 })
 export class DataTableComponent implements OnInit {
-  public storedData: any[] = [];
+  public storedData?: FinancialData[];
   currentPage: number = 1;
   itemsPerPage: number = 5;
   totalItems: number = 0;
@@ -19,22 +20,22 @@ export class DataTableComponent implements OnInit {
 
   constructor(private userService: UserService, public globals: Globals) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getStoredData();
     this.userService.dataUpdated.subscribe(() => {
       this.getStoredData();
     });
   }
 
-  paginatedData() {
+  paginatedData(): FinancialData[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
 
-    return this.storedData.slice(startIndex, endIndex);
+    return this.storedData!.slice(startIndex, endIndex);
   }
 
-  getStoredData() {
-    let filteredData = this.userService.getFinancialData();
+  getStoredData(): void {
+    let filteredData: FinancialData[] = this.userService.getFinancialData();
 
     if (this.appliedFilters.searchTerm) {
       filteredData = filteredData.filter((entry: { name: string }) =>
@@ -61,7 +62,7 @@ export class DataTableComponent implements OnInit {
     }
 
     if (this.appliedFilters.dateStart && this.appliedFilters.dateEnd) {
-      filteredData = filteredData.filter((entry: { date: string }) => {
+      filteredData = filteredData.filter((entry: { date: Date }) => {
         const entryDate = new Date(entry.date);
         const startDate = new Date(this.appliedFilters.dateStart);
         const endDate = new Date(this.appliedFilters.dateEnd);
@@ -82,7 +83,7 @@ export class DataTableComponent implements OnInit {
     this.totalItems = this.storedData.length;
   }
 
-  filterType(type: string) {
+  filterType(type: string): void {
     if (type === 'Type') {
       delete this.appliedFilters.type;
     } else {
@@ -91,7 +92,7 @@ export class DataTableComponent implements OnInit {
     this.getStoredData();
   }
 
-  filterReoccuring(reoccuring: string) {
+  filterReoccuring(reoccuring: string): void {
     if (reoccuring === 'Reoccuring') {
       delete this.appliedFilters.reoccuring;
     } else {
@@ -100,7 +101,7 @@ export class DataTableComponent implements OnInit {
     this.getStoredData();
   }
 
-  filterCategory(category: string) {
+  filterCategory(category: string): void {
     if (category === 'Category') {
       delete this.appliedFilters.category;
     } else {
@@ -109,17 +110,17 @@ export class DataTableComponent implements OnInit {
     this.getStoredData();
   }
 
-  toggleDatePicker() {
+  toggleDatePicker(): void {
     this.showDatePicker = !this.showDatePicker;
   }
 
-  onEdit(data: any) {
+  onEdit(data: FinancialData): void {
     this.globals.toggleFormVisibility();
     this.globals.isStatsVisible = false;
     this.globals.editData = data;
   }
 
-  onDelete(id: string) {
+  onDelete(id: string): void {
     this.userService.deleteFinancialData(id);
   }
 }
