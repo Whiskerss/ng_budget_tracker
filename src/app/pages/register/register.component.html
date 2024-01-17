@@ -10,7 +10,9 @@
               id="name"
               type="text"
               class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['name'].errors }"
+              [ngClass]="{
+                'is-invalid': submitted && f['name'].errors
+              }"
               name="name"
               formControlName="name"
               required
@@ -31,7 +33,9 @@
               id="email"
               type="email"
               class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+              [ngClass]="{
+                'is-invalid': (submitted && f['email'].errors) || existingUser
+              }"
               name="email"
               formControlName="email"
               required

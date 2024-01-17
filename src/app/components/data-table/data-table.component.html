@@ -1,5 +1,6 @@
 <div class="display-stats mt border rounded p-2" *ngIf="globals.isStatsVisible">
-  <div>
+  <div class="filters">
+    <!-- Search input -->
     <input
       class="form-control form-control text-center"
       type="text"
@@ -9,6 +10,7 @@
     />
 
     <div class="d-flex justify-content-around my-3">
+      <!-- Range date picker filter -->
       <div>
         <div
           class="btn border px-5 py-3"
@@ -39,6 +41,7 @@
         </div>
       </div>
 
+      <!-- Dropdowns for Type, Reoccuring, and Category filters -->
       <select
         #type
         class="btn border px-5 py-3"
@@ -71,6 +74,7 @@
     </div>
   </div>
 
+  <!-- Financial Data Table -->
   <table
     class="table table-responsive table-bordered text-center table-striped-columns caption-top"
   >
@@ -99,6 +103,7 @@
         <td>{{ data.date }}</td>
         <td>{{ data.reoccuring }}</td>
         <td>{{ data.category }}</td>
+        <!-- Actions column (Edit and Delete buttons) -->
         <td *ngIf="!globals.isFormVisible" class="p-0">
           <div class="btn-group w-100">
             <div class="btn btn-warning rounded-0" (click)="onEdit(data)">
@@ -111,10 +116,12 @@
         </td>
       </tr>
       }@empty {
-      <td [colSpan]="8">Wow! So empty</td>
+      <!-- Display message if no data is available -->
+      <td [colSpan]="8"><h2>Wow! So empty.</h2></td>
       }
     </tbody>
   </table>
+  <!-- Pagination Controls -->
   <div class="text-center btn-group col-12 mb-3">
     <button
       class="btn border btn-light"
@@ -133,11 +140,14 @@
     </button>
   </div>
 
-  <button
-    class="btn btn-success"
-    *ngIf="!globals.isFormVisible"
-    (click)="globals.toggleFormVisibility()"
-  >
-    Add
-  </button>
+  <!-- Add Financial Data Button -->
+  <div class="d-flex justify-content-end">
+    <button
+      class="btn btn-success px-5"
+      *ngIf="!globals.isFormVisible"
+      (click)="globals.toggleFormVisibility()"
+    >
+      Add
+    </button>
+  </div>
 </div>

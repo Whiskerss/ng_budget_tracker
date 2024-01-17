@@ -1,5 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="border p-2 rounded">
   <div class="row">
+    <!-- Display 'Edit' header only when editing -->
     <h2 class="text-center" *ngIf="!globals.isStatsVisible">Edit</h2>
 
     <div class="mb-3 col-6">
@@ -8,11 +9,12 @@
         id="name"
         type="text"
         class="form-control"
-        [ngClass]="{ 'is-invalid': submitted && f['name'].errors }"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('name') }"
         name="name"
         formControlName="name"
         required
       />
+      <!-- Error Handling -->
       @if (submitted && f['name'].errors) {
       <div class="invalid-feedback">
         @if (f['name'].errors['required']) {
@@ -28,7 +30,7 @@
         id="amount"
         type="number"
         class="form-control"
-        [ngClass]="{ 'is-invalid': submitted && f['amount'].errors }"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('amount') }"
         name="amount"
         formControlName="amount"
         required
@@ -48,7 +50,7 @@
         id="date"
         type="date"
         class="form-control"
-        [ngClass]="{ 'is-invalid': submitted && f['date'].errors }"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('date') }"
         name="date"
         formControlName="date"
         required
@@ -62,6 +64,7 @@
       }
     </div>
 
+    <!-- Dropdowns for 'Type', 'Reoccuring', and 'Category' -->
     <div class="btn-group col-6 my-4">
       <select
         class="btn border"
@@ -102,7 +105,8 @@
     </div>
   </div>
 
-  <div class="hstack gap-3">
+  <!-- Submit and cancel buttons -->
+  <div class="hstack gap-3 justify-content-end">
     <button type="submit" class="btn btn-primary">Submit</button>
     <button type="button" class="btn btn-secondary" (click)="onCancel()">
       Cancel

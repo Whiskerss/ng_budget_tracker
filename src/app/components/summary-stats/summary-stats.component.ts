@@ -15,12 +15,14 @@ export class SummaryStatsComponent implements OnInit {
   ngOnInit(): void {
     this.calculateData();
 
+    // Subscribe to dataUpdated event to recalculate on changes
     this.userService.dataUpdated.subscribe(() => {
       this.calculateData();
     });
   }
 
   calculateData(): void {
+    // Calculate total expenses
     this.expense = this.userService
       .getFinancialData()
       .filter((entry: { type: string }) => entry.type === 'Expense')
@@ -29,6 +31,7 @@ export class SummaryStatsComponent implements OnInit {
         0
       );
 
+    // Calculate total income
     this.income = this.userService
       .getFinancialData()
       .filter((entry: { type: string }) => entry.type === 'Income')
@@ -37,6 +40,7 @@ export class SummaryStatsComponent implements OnInit {
         0
       );
 
+    // Calculate the balance
     this.balance = this.income - this.expense;
   }
 }

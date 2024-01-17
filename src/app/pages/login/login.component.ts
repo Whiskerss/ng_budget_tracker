@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  // Getter method for easy access to form controls in the template
   get f(): { [key: string]: AbstractControl } {
     return this.loginForm.controls;
   }
@@ -43,6 +44,7 @@ export class LoginComponent implements OnInit {
     const password: string = this.loginForm.value.password;
     if (this.authService.login(email, password)) {
       this.router.navigateByUrl('/home');
+      // Resetting form submission and authentication error flag
       this.submitted = false;
       this.authError = false;
     } else {

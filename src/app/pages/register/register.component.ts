@@ -6,8 +6,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
-import { User } from '../models/user.model';
+import { AuthService } from '../../services/auth.service';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-register',
@@ -32,10 +32,12 @@ export class RegisterComponent {
     });
   }
 
+  // Getter method for easy access to form controls in the template
   get f(): { [key: string]: AbstractControl } {
     return this.registerForm.controls;
   }
 
+  // Private method to generate a unique user ID
   private generateUserId(): string {
     return new Date().getTime().toString();
   }

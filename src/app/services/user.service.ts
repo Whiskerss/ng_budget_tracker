@@ -9,50 +9,57 @@ import { FinancialData } from '../models/financial-data.model';
 export class UserService {
   private readonly userStorageKey = 'users';
   private currentUserId: string;
-  dataUpdated: EventEmitter<any> = new EventEmitter();
+  dataUpdated: EventEmitter<any> = new EventEmitter(); // EventEmitter to notify components about data updates
 
   constructor(private currentUserService: CurrentUserService) {
     this.currentUserId = this.currentUserService.getCurrentUser().id;
   }
 
+  // Method to retrieve all users from local storage
   getUsers(): User[] {
     const usersString = localStorage.getItem(this.userStorageKey);
     return usersString ? JSON.parse(usersString) : [];
   }
 
-  getFinancialData() {
+  // Method to retrieve financial data for the current user
+  getFinancialData(): FinancialData[] {
     this.currentUserId = this.currentUserService.getCurrentUser().id;
-    const users = this.getUsers();
-    const userIndex = users.findIndex((user) => user.id === this.currentUserId);
-    return users[userIndex].financialData || [];
+    const users: User[] = this.getUsers();
+    const currentUserIndex = users.findIndex(
+      (user) => user.id === this.currentUserId
+    );
+    return users[currentUserIndex].financialData || [];
   }
 
-  addFinancialData(formData: any): void {
+  // Method to add financial data for the current user
+  addFinancialData(formData: FinancialData): void {
     const users: User[] = this.getUsers();
-    const userIndex: number = users.findIndex(
+    const currentUserIndex: number = users.findIndex(
       (user) => user.id === this.currentUserId
     );
 
-    if (userIndex !== -1) {
-      users[userIndex].financialData = users[userIndex].financialData || [];
-      users[userIndex].financialData!.push(formData);
+    if (currentUserIndex !== -1) {
+      users[currentUserIndex].financialData =
+        users[currentUserIndex].financialData || [];
+      users[currentUserIndex].financialData!.push(formData);
 
       localStorage.setItem(this.userStorageKey, JSON.stringify(users));
-      this.dataUpdated.emit();
+      this.dataUpdated.emit(); // Notify components about the data update
     } else {
       console.log('Add: User Not Found!');
     }
   }
 
+  // Method to edit existing financial data for the current user
   editFinancialData(formData: any): void {
     const users: User[] = this.getUsers();
-    const userIndex: number = users.findIndex(
+    const currentUserIndex: number = users.findIndex(
       (user) => user.id === this.currentUserId
     );
 
-    if (userIndex !== -1) {
+    if (currentUserIndex !== -1) {
       const financialData: FinancialData[] =
-        users[userIndex].financialData || [];
+        users[currentUserIndex].financialData || [];
       const formDataIndex = financialData.findIndex(
         (data: FinancialData) => data.id === formData.id
       );
@@ -60,7 +67,7 @@ export class UserService {
       if (formDataIndex !== -1) {
         financialData[formDataIndex] = formData;
         localStorage.setItem(this.userStorageKey, JSON.stringify(users));
-        this.dataUpdated.emit();
+        this.dataUpdated.emit(); // Notify components about the data update
       } else {
         console.log('Edit: Financial Data not found!');
       }
@@ -69,8 +76,9 @@ export class UserService {
     }
   }
 
+  // Method to delete financial data for the current user
   deleteFinancialData(id: string): void {
-    const users = this.getUsers();
+    const users: User[] = this.getUsers();
     const userIndex = users.findIndex((user) => user.id === this.currentUserId);
 
     if (userIndex !== -1) {
@@ -84,7 +92,7 @@ export class UserService {
         financialData.splice(formDataIndex, 1);
 
         localStorage.setItem(this.userStorageKey, JSON.stringify(users));
-        this.dataUpdated.emit();
+        this.dataUpdated.emit(); // Notify components about the data update
       } else {
         console.log('Delete: Financial Data not found!');
       }

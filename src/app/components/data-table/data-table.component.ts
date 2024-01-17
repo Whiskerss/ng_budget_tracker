@@ -12,9 +12,12 @@ import { FinancialData } from '../../models/financial-data.model';
 })
 export class DataTableComponent implements OnInit {
   public storedData?: FinancialData[];
+
+  // Pagination properties
   currentPage: number = 1;
   itemsPerPage: number = 5;
   totalItems: number = 0;
+
   showDatePicker: boolean = false;
   appliedFilters: any = {};
 
@@ -22,11 +25,14 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.getStoredData();
+
+    // Subscribe to dataUpdated event to update data on changes
     this.userService.dataUpdated.subscribe(() => {
       this.getStoredData();
     });
   }
 
+  // Method to paginate the stored data
   paginatedData(): FinancialData[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
@@ -34,9 +40,11 @@ export class DataTableComponent implements OnInit {
     return this.storedData!.slice(startIndex, endIndex);
   }
 
+  // Method to retrieve and filter financial data based on applied filters
   getStoredData(): void {
     let filteredData: FinancialData[] = this.userService.getFinancialData();
 
+    // Apply filters based on search
     if (this.appliedFilters.searchTerm) {
       filteredData = filteredData.filter((entry: { name: string }) =>
         entry.name
@@ -45,6 +53,7 @@ export class DataTableComponent implements OnInit {
       );
     }
 
+    // Apply filters based on type
     if (this.appliedFilters.type) {
       filteredData = filteredData.filter((entry: { type: string }) =>
         entry.type
@@ -53,6 +62,7 @@ export class DataTableComponent implements OnInit {
       );
     }
 
+    // Apply filters based on reoccurring
     if (this.appliedFilters.reoccuring) {
       filteredData = filteredData.filter((entry: { reoccuring: string }) =>
         entry.reoccuring
@@ -61,6 +71,7 @@ export class DataTableComponent implements OnInit {
       );
     }
 
+    // Apply filters based on date range
     if (this.appliedFilters.dateStart && this.appliedFilters.dateEnd) {
       filteredData = filteredData.filter((entry: { date: Date }) => {
         const entryDate = new Date(entry.date);
@@ -71,6 +82,7 @@ export class DataTableComponent implements OnInit {
       });
     }
 
+    // Apply filters based on category
     if (this.appliedFilters.category) {
       filteredData = filteredData.filter((entry: { category: string }) =>
         entry.category
@@ -79,10 +91,12 @@ export class DataTableComponent implements OnInit {
       );
     }
 
+    // Update storedData and totalItems properties
     this.storedData = filteredData;
     this.totalItems = this.storedData.length;
   }
 
+  // Method to handle type filter
   filterType(type: string): void {
     if (type === 'Type') {
       delete this.appliedFilters.type;
@@ -92,6 +106,7 @@ export class DataTableComponent implements OnInit {
     this.getStoredData();
   }
 
+  // Method to handle reoccurring filter
   filterReoccuring(reoccuring: string): void {
     if (reoccuring === 'Reoccuring') {
       delete this.appliedFilters.reoccuring;
@@ -101,6 +116,7 @@ export class DataTableComponent implements OnInit {
     this.getStoredData();
   }
 
+  // Method to handle category filter
   filterCategory(category: string): void {
     if (category === 'Category') {
       delete this.appliedFilters.category;
@@ -110,16 +126,19 @@ export class DataTableComponent implements OnInit {
     this.getStoredData();
   }
 
+  // Method to toggle date picker visibility
   toggleDatePicker(): void {
     this.showDatePicker = !this.showDatePicker;
   }
 
+  // Method to handle editing financial data
   onEdit(data: FinancialData): void {
     this.globals.toggleFormVisibility();
     this.globals.isStatsVisible = false;
     this.globals.editData = data;
   }
 
+  // Method to handle deleting financial data
   onDelete(id: string): void {
     this.userService.deleteFinancialData(id);
   }

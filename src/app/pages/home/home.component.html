@@ -1,8 +1,10 @@
 <div class="m-5">
+  <!-- Card section for the header -->
   <div class="card hstack gap-3 p-3">
     <h3>Budget Tracker</h3>
     <div class="vr"></div>
     <h4>Dashboard</h4>
+    <!-- Button group for user information and logout -->
     <div class="ms-auto btn-group">
       <div class="btn btn-secondary">
         {{ currentUser.name }}
@@ -10,7 +12,10 @@
       <div class="ms-auto btn btn-danger" (click)="logout()">Logout</div>
     </div>
   </div>
+  <!-- App-summary-stats component for displaying Income | Expense | Balance -->
   <app-summary-stats />
+  <!-- App-data-table component for displaying financial data in a table -->
   <app-data-table />
+  <!-- App-add-form component for adding financial data -->
   <app-add-form *ngIf="globals.isFormVisible" />
 </div>
